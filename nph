@@ -1,0 +1,55 @@
+#!/bin/bash
+#npm = npm Package Handler
+
+# this script allows the user to add a package to the package.json file without installing it
+# this is useful when using docker enviorments, so each user does not need a redundent node_modules folder
+
+if [ "" = "$1" ]
+  then
+    echo "No argument supplied"
+    exit 1
+fi
+
+
+# checks if the first argument is equal to "h" for help
+if [ "$1" = "--h" ] || [ "$1" = "--help" ]
+  then
+  echo "Instead of using npm to install a package, use nph to add it to the package.json file"
+  echo "where normally you would use 'npm install <package>', use 'bash nph i <package>'"
+  echo ""
+  echo "Use 'bash nph i <package>' to install a package" 
+  echo "Use 'bash nph u <package>' to uninstall a package"
+  echo ""
+  echo "Use 'bash nph --h' to see this help message"
+  echo ""
+  echo "ensure that docker is stopped before running this script"
+  exit 0
+fi
+
+# checks if the first argument is equal to "i" for install
+if [ "$1" = "--i" ] || [ "$1" = "--install" ]
+  then
+    # checks to see if the second argument is empty (which package to install)
+    if [ "" = "$2" ]
+      then
+        echo "No package name supplied"
+        exit -1
+    fi
+    echo "Installing package $2"
+    npm install --save --package-lock-only --no-package-lock $2
+    exit 0
+fi
+
+if [ "$1" = "--u" ] || [ "$1" = "--uninstall" ]
+  then
+    # checks to see if the second argument is empty (which package to uninstall)
+    if [ "" = "$2" ]
+      then
+        echo "No package name supplied"
+        exit -1
+    fi
+    echo "Uninstalling package $2"
+    npm uninstall --save --package-lock-only --no-package-lock $2
+    # sudo rm -r node_modules/
+    exit 0
+fi
