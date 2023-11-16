@@ -1,5 +1,3 @@
 #!/bin/bash
 
-npm install && # install dependencies into the docker container
-npm run dev &&   # runs the dev server
-npm next telemetry disable # disables nextjs telemetry
+python3 -m http.server 5000
