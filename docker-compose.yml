@@ -1,7 +1,7 @@
 version: "3"
 
 services:
-  app:
+  frontend:
     build:
       context: "./Frontend/Docker"
       dockerfile: Dockerfile
@@ -10,3 +10,13 @@ services:
     volumes:
       - ./Frontend:/app/frontend
     command: bash entrypoint
+
+  backend:
+    build:
+      context: "./Backend/Docker"
+      dockerfile: Dockerfile
+    # ports could change later with addition to API code(?)
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./Backend:/app/backend
